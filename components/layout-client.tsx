@@ -11,31 +11,87 @@ import {
   Calendar,
   Briefcase,
   BookOpen,
-  Mail,
-  Info,
+ 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import axios from "axios";
 const navigationItems = [
   { title: "Home", href: "/", icon: TrendingUp },
   // { title: "About", href: "/about", icon: Info },
   { title: "Teams", href: "/teams", icon: Users },
   { title: "Events", href: "/events", icon: Calendar },
   { title: "Projects", href: "/projects", icon: Briefcase },
-  { title: "Join Us", href: "/joinus", icon: Users },
+  { title: "Members", href: "/members", icon: Users },
   { title: "Blog", href: "/blog", icon: BookOpen },
   // { title: "Contact", href: "/contact", icon: Mail },
 ];
 
+type TickerItem = {
+  symbol: string;
+  price: string;
+  change: string;
+};
+
 const StockTicker = () => {
-  const stocks = [
-    { symbol: "BTC", price: "43,250", change: "+2.4%" },
-    { symbol: "ETH", price: "2,280", change: "+1.8%" },
-    { symbol: "NIFTY", price: "21,456", change: "+0.9%" },
-    { symbol: "SENSEX", price: "71,234", change: "+1.2%" },
-    { symbol: "NASDAQ", price: "15,890", change: "+0.7%" },
-    { symbol: "GOLD", price: "2,045", change: "-0.3%" },
-  ];
+  const [stocks, setStocks] = useState<TickerItem[]>([]);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        const res = await axios.get(
+          "https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
+          {
+            headers: {
+              "X-CMC_PRO_API_KEY": process.env.API_KEY_STOCKS,
+            },
+          },
+        );
+        const listings = Array.isArray(res.data?.data) ? res.data.data : [];
+        const items = listings.slice(0, 10).map((item: any) => {
+          const price = Number(item?.quote?.USD?.price ?? NaN);
+          const changeValue = Number(item?.quote?.USD?.percent_change_24h ?? NaN);
+
+          const formattedPrice = Number.isFinite(price)
+            ? price.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
+            : "N/A";
+
+          const formattedChange = Number.isFinite(changeValue)
+            ? `${changeValue >= 0 ? "+" : ""}${changeValue.toFixed(2)}%`
+            : "0.00%";
+
+          return {
+            symbol: item?.symbol ?? "N/A",
+            price: formattedPrice,
+            change: formattedChange,
+          } as TickerItem;
+        });
+
+        setStocks(items);
+      } catch (error) {
+        console.error("Failed to fetch cryptocurrency listings", error);
+      }
+    };
+
+    fetchListings();
+  }, []);
+
+  useEffect(() => {
+    if (!stocks.length) return;
+
+    console.log(stocks);
+  }, [stocks]);
+
+  // const stocks = [
+  //   { symbol: "BTC", price: "43,250", change: "+2.4%" },
+  //   { symbol: "ETH", price: "2,280", change: "+1.8%" },
+  //   { symbol: "NIFTY", price: "21,456", change: "+0.9%" },
+  //   { symbol: "SENSEX", price: "71,234", change: "+1.2%" },
+  //   { symbol: "NASDAQ", price: "15,890", change: "+0.7%" },
+  //   { symbol: "GOLD", price: "2,045", change: "-0.3%" },
+  // ];
 
   return (
     <div className="bg-[#0a1f3c] border-t border-cyan-500/20 py-2 overflow-hidden">
