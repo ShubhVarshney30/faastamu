@@ -24,7 +24,7 @@ const navigationItems = [
   { title: "Projects", href: "/projects", icon: Briefcase },
   { title: "Join Us", href: "/joinus", icon: Users },
   { title: "Blog", href: "/blog", icon: BookOpen },
-  { title: "Contact", href: "/contact", icon: Mail },
+  // { title: "Contact", href: "/contact", icon: Mail },
 ];
 
 const StockTicker = () => {
