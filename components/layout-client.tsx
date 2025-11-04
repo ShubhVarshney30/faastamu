@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 
 const navigationItems = [
   { title: "Home", href: "/", icon: TrendingUp },
-  { title: "About", href: "/about", icon: Info },
+  // { title: "About", href: "/about", icon: Info },
   { title: "Teams", href: "/teams", icon: Users },
   { title: "Events", href: "/events", icon: Calendar },
   { title: "Projects", href: "/projects", icon: Briefcase },
