@@ -392,9 +392,9 @@ const Members = () => {
                 key={member.name}
                 className="glass-panel border border-cyan-500/40 bg-[#0a1f3c]/80 rounded-3xl p-8 shadow-[0_0_28px_rgba(0,229,255,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_45px_rgba(0,229,255,0.5)] relative"
               >
-                <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-semibold bg-cyan-500/10 border border-cyan-500/40 text-cyan-200 uppercase tracking-wide">
+                {/* <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-semibold bg-cyan-500/10 border border-cyan-500/40 text-cyan-200 uppercase tracking-wide">
                   Core Team
-                </div>
+                </div> */}
 
                 <div className="flex items-center gap-4 mb-6">
                   <div className="h-14 w-14 rounded-2xl bg-linear-to-br from-cyan-500 via-blue-600 to-purple-600 flex items-center justify-center text-lg font-bold">
