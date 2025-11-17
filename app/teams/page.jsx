@@ -70,7 +70,26 @@ export default function Teams() {
         "Handle member recruitment and onboarding"
       ],
       skills: ["Event Management", "Social Media Marketing", "Public Speaking", "Design", "Networking"]
-    }
+    },
+    {
+      id: 5,
+      name: "Case Study Team",
+      icon: LineChart,
+      color: "from-cyan-500 to-blue-600",
+      glowColor: "shadow-cyan-500/50",
+      description: "Explore business cases and financial models through case studies and competitive analysis",
+      responsibilities: [
+        "Analyze business cases and financial models",
+        "Conduct in-depth market research and competitive analysis",
+        "Build predictive models for financial forecasting",
+        "Analyze financial statements and company fundamentals",
+        "Create data visualizations and dashboards",
+        "Develop research papers on market trends",
+        "Apply financial analysis techniques to real-world problems",
+        "Collaborate with teams to find optimal solutions"
+      ],
+      skills: ["Python", "Financial Modeling", "Data Analysis", "Statistics", "Excel"]
+    },
   ];
 
   return (
@@ -140,7 +159,7 @@ export default function Teams() {
             {selectedTeam && (
               <div className="glass-panel rounded-xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex items-center gap-4 mb-8">
-                  <div className={`w-20 h-20 rounded-xl bg-gradient-to-br ${selectedTeam.color} flex items-center justify-center ${selectedTeam.glowColor} shadow-xl`}>
+                  <div className={`w-20 h-20 rounded-xl bg-linear-to-br ${selectedTeam.color} flex items-center justify-center ${selectedTeam.glowColor} shadow-xl`}>
                     <selectedTeam.icon className="text-white" size={40} />
                   </div>
                   <div>

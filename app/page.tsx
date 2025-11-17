@@ -11,9 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
+// Premium Finance-Themed Animated Background with 3D Crypto Elements
 const AnimatedBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -21,11 +21,55 @@ const AnimatedBackground = () => {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+    
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const particles: Array<{ x: number; y: number; vx: number; vy: number }> = [];
-    const particleCount = 100;
+    // Bitcoin/Crypto coin objects with 3D properties
+    interface CryptoCoin {
+      x: number;
+      y: number;
+      z: number;
+      size: number;
+      rotation: number;
+      rotationSpeed: number;
+      vx: number;
+      vy: number;
+      vz: number;
+      color: string;
+    }
+
+    const coins: CryptoCoin[] = [];
+    const coinCount = 15;
+
+    // Create floating crypto coins
+    for (let i = 0; i < coinCount; i++) {
+      coins.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        z: Math.random() * 100,
+        size: 30 + Math.random() * 40,
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.02,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        vz: (Math.random() - 0.5) * 0.2,
+        color: i % 3 === 0 ? '#FFD700' : i % 3 === 1 ? '#00E5FF' : '#8B5CF6'
+      });
+    }
+
+    // Financial chart particles
+    interface Particle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      opacity: number;
+    }
+
+    const particles: Particle[] = [];
+    const particleCount = 80;
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
@@ -33,37 +77,131 @@ const AnimatedBackground = () => {
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 3 + 1,
+        opacity: Math.random() * 0.5 + 0.3
       });
+    }
+
+    // Chart lines for financial data visualization
+    interface ChartLine {
+      points: { x: number; y: number }[];
+      color: string;
+      offset: number;
+    }
+
+    const chartLines: ChartLine[] = [];
+    for (let i = 0; i < 3; i++) {
+      const points = [];
+      for (let j = 0; j < 50; j++) {
+        points.push({
+          x: (canvas.width / 50) * j,
+          y: canvas.height / 2 + Math.sin(j * 0.2 + i) * 50
+        });
+      }
+      chartLines.push({
+        points,
+        color: i === 0 ? 'rgba(0, 229, 255, 0.3)' : i === 1 ? 'rgba(139, 92, 246, 0.3)' : 'rgba(255, 215, 0, 0.3)',
+        offset: i * 20
+      });
+    }
+
+    let time = 0;
+
+    function drawCoin(coin: CryptoCoin) {
+      if (!ctx) return;
+      
+      const scale = 1 + (coin.z / 100) * 0.5;
+      const displaySize = coin.size * scale;
+      
+      ctx.save();
+      ctx.translate(coin.x, coin.y);
+      ctx.rotate(coin.rotation);
+      
+      // 3D effect with gradient
+      const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, displaySize);
+      gradient.addColorStop(0, coin.color);
+      gradient.addColorStop(0.7, coin.color + '80');
+      gradient.addColorStop(1, coin.color + '20');
+      
+      // Outer ring (coin edge)
+      ctx.beginPath();
+      ctx.arc(0, 0, displaySize, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+      
+      // Inner symbol (Bitcoin B or Ethereum symbol)
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 3;
+      ctx.font = `bold ${displaySize * 0.8}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#000000';
+      ctx.fillText(coin.color === '#FFD700' ? '₿' : coin.color === '#00E5FF' ? 'Ξ' : '◈', 0, 0);
+      
+      ctx.restore();
     }
 
     function animate() {
       if (!ctx || !canvas) return;
       
-      ctx.fillStyle = 'rgba(3, 7, 18, 0.1)';
+      time += 0.01;
+      
+      // Premium gradient background
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#030712');
+      gradient.addColorStop(0.5, '#0a1628');
+      gradient.addColorStop(1, '#1e1b4b');
+      ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.strokeStyle = 'rgba(0, 229, 255, 0.2)';
-      ctx.lineWidth = 1;
-
+      
+      // Add radial glow effect
+      const glowGradient = ctx.createRadialGradient(
+        canvas.width / 2, canvas.height / 2, 0,
+        canvas.width / 2, canvas.height / 2, canvas.width / 2
+      );
+      glowGradient.addColorStop(0, 'rgba(0, 229, 255, 0.05)');
+      glowGradient.addColorStop(0.5, 'rgba(139, 92, 246, 0.03)');
+      glowGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = glowGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw animated chart lines
+      chartLines.forEach((line, index) => {
+        ctx.beginPath();
+        ctx.strokeStyle = line.color;
+        ctx.lineWidth = 2;
+        line.points.forEach((point, i) => {
+          const x = point.x;
+          const y = point.y + Math.sin(time + i * 0.1 + index) * 30;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      });
+      
+      // Draw and update particles with connections
       particles.forEach((particle, i) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
-
+        
         if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
         if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
-
-        if (!ctx) return;
-        ctx.fillStyle = 'rgba(0, 229, 255, 0.5)';
+        
+        // Draw particle
+        ctx.fillStyle = `rgba(0, 229, 255, ${particle.opacity})`;
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
-
+        
+        // Connect nearby particles
         particles.slice(i + 1).forEach(otherParticle => {
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 100 && ctx) {
+          
+          if (distance < 120) {
+            ctx.strokeStyle = `rgba(0, 229, 255, ${0.2 * (1 - distance / 120)})`;
+            ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
@@ -71,7 +209,45 @@ const AnimatedBackground = () => {
           }
         });
       });
-
+      
+      // Draw and update 3D crypto coins
+      coins.forEach(coin => {
+        coin.x += coin.vx;
+        coin.y += coin.vy;
+        coin.z += coin.vz;
+        coin.rotation += coin.rotationSpeed;
+        
+        if (coin.x < -50 || coin.x > canvas.width + 50) coin.vx *= -1;
+        if (coin.y < -50 || coin.y > canvas.height + 50) coin.vy *= -1;
+        if (coin.z < 0 || coin.z > 100) coin.vz *= -1;
+        
+        drawCoin(coin);
+      });
+      
+      // Add floating geometric shapes (blockchain representation)
+      for (let i = 0; i < 5; i++) {
+        const x = (canvas.width / 6) * (i + 1);
+        const y = canvas.height / 2 + Math.sin(time + i) * 100;
+        const size = 40;
+        
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(time + i);
+        ctx.strokeStyle = 'rgba(139, 92, 246, 0.2)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let j = 0; j < 6; j++) {
+          const angle = (Math.PI / 3) * j;
+          const px = Math.cos(angle) * size;
+          const py = Math.sin(angle) * size;
+          if (j === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+      }
+      
       requestAnimationFrame(animate);
     }
 
@@ -91,11 +267,11 @@ const AnimatedBackground = () => {
 
 export default function Home() {
    const acronym = [
-    { letter: "F", word: "Finance", icon: DollarSign, description: "Master the fundamentals of financial markets, trading, and investment strategies" },
+    { letter: "F", word: "Finance", icon: DollarSign, description: "Master the fundamentals of financial markets, ethical trading, and investment strategies" },
     { letter: "A", word: "Algorithm", icon: Code, description: "Develop algorithmic trading systems and quantitative analysis tools" },
     { letter: "A", word: "Analytics", icon: BarChart, description: "Deep dive into data analytics, market research, and financial modeling" },
-    { letter: "S", word: "Stocks", icon: TrendingUp, description: "Learn stock market operations, portfolio management, and trading techniques" },
-    { letter: "T", word: "Trade", icon: Zap, description: "Get hands-on experience with live trading and real-world market scenarios" }
+    { letter: "S", word: "Stocks", icon: TrendingUp, description: "Learn stock market operations, portfolio management, and ethical trading techniques" },
+    { letter: "T", word: "Trade", icon: Zap, description: "Get hands-on experience with live ethical trading and real-world market scenarios" }
   ];
 
   const [formData, setFormData] = useState({
@@ -164,17 +340,21 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       }
     ];
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-[#030712] via-[#0a1628] to-[#030712]">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <AnimatedBackground />
         
-        <div className="absolute inset-0 matrix-bg opacity-30" />
+        {/* Floating decorative elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 border-2 border-cyan-500/20 rounded-full float-animation blur-sm" />
+        <div className="absolute top-40 right-20 w-16 h-16 border-2 border-purple-500/20 rounded-lg float-animation-delayed blur-sm rotate-45" />
+        <div className="absolute bottom-40 left-20 w-24 h-24 border-2 border-yellow-500/20 rounded-full float-animation blur-sm" />
+        <div className="absolute bottom-20 right-40 w-12 h-12 border-2 border-cyan-500/20 rounded-lg float-animation-delayed blur-sm rotate-12" />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            <div className="inline-block mb-6 px-6 py-2 rounded-full glass-panel border border-cyan-500/30">
-              <span className="text-cyan-400 text-sm font-semibold">🚀 AMU&apos;S PREMIER FINTECH CLUB</span>
+            <div className="inline-block mb-6 px-6 py-2 rounded-full glass-panel border border-cyan-500/30 shimmer">
+              <span className="text-cyan-400 text-sm font-semibold tracking-wider">🚀 AMU&apos;S PREMIER FINTECH CLUB</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
@@ -223,21 +403,21 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             </div>
 
             <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div className="glass-panel rounded-xl p-6 hover:scale-105 transition-transform">
+              <div className="premium-card glass-panel rounded-xl p-6 glow-cyan">
                 <div className="text-4xl font-bold text-gradient mb-2">50+</div>
-                <div className="text-gray-400">Members</div>
+                <div className="text-gray-300 font-medium">Active Members</div>
               </div>
-              <div className="glass-panel rounded-xl p-6 hover:scale-105 transition-transform">
-                <div className="text-4xl font-bold text-gradient mb-2">2+</div>
-                <div className="text-gray-400">Events Hosted</div>
+              <div className="premium-card glass-panel rounded-xl p-6 glow-purple">
+                <div className="text-4xl font-bold text-gradient mb-2">1+</div>
+                <div className="text-gray-300 font-medium">Events Hosted</div>
               </div>
-              <div className="glass-panel rounded-xl p-6 hover:scale-105 transition-transform">
-                <div className="text-4xl font-bold text-gradient mb-2">3</div>
-                <div className="text-gray-400">Competitions Won</div>
+              <div className="premium-card glass-panel rounded-xl p-6 glow-gold">
+                <div className="text-4xl font-bold text-gradient mb-2">0</div>
+                <div className="text-gray-300 font-medium">Competitions Won</div>
               </div>
-              <div className="glass-panel rounded-xl p-6 hover:scale-105 transition-transform">
-                <div className="text-4xl font-bold text-gradient mb-2">4</div>
-                <div className="text-gray-400">Specialized Teams</div>
+              <div className="premium-card glass-panel rounded-xl p-6 glow-cyan">
+                <div className="text-4xl font-bold text-gradient mb-2">5</div>
+                <div className="text-gray-300 font-medium">Specialized Teams</div>
               </div>
             </div>
           </div>
@@ -251,13 +431,19 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       </section>
 
       {/* What We Do Section */}
-      <section className="py-20 bg-[#0a1f3c]/30">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-gradient-to-b from-[#0a1628]/50 via-[#1e1b4b]/30 to-transparent relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-30">
+          <div className="absolute top-20 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-              What We Do
+              What We <span className="text-gradient">Do</span>
             </h2>
-            <p className="text-xl text-gray-400 text-center mb-16 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 text-center mb-16 max-w-3xl mx-auto">
               We&apos;re not just a club – we&apos;re a launchpad for future innovators in finance and technology
             </p>
 
@@ -266,34 +452,34 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 {
                   icon: LineChart,
                   title: "Algorithmic Trading",
-                  description: "Master quantitative strategies and automated trading systems",
-                  color: "cyan"
+                  description: "Master quantitative strategies and automated ethical trading systems",
+                  gradient: "from-cyan-500 to-blue-600"
                 },
                 {
                   icon: BarChart3,
                   title: "Market Analytics",
                   description: "Deep dive into financial data analysis and market research",
-                  color: "blue"
+                  gradient: "from-blue-500 to-purple-600"
                 },
                 {
                   icon: Code2,
                   title: "FinTech Development",
                   description: "Build cutting-edge financial technology solutions",
-                  color: "purple"
+                  gradient: "from-purple-500 to-pink-600"
                 },
                 {
                   icon: TrendingUp,
-                  title: "Live Trading",
+                  title: "Live ethical Trading",
                   description: "Real-world trading experience with mentorship",
-                  color: "yellow"
+                  gradient: "from-yellow-500 to-orange-600"
                 }
               ].map((item, index) => (
-                <div key={index} className="glass-panel rounded-xl p-6 hover:scale-105 hover:glow-cyan transition-all duration-300 group">
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br from-${item.color}-500 to-${item.color}-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <item.icon className="text-white" size={24} />
+                <div key={index} className="premium-card glass-panel rounded-xl p-6 group">
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
+                    <item.icon className="text-white" size={26} />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-cyan-400">{item.title}</h3>
-                  <p className="text-gray-400">{item.description}</p>
+                  <h3 className="text-xl font-bold mb-3 text-cyan-400 group-hover:text-cyan-300 transition-colors">{item.title}</h3>
+                  <p className="text-gray-400 leading-relaxed">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -324,7 +510,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 {
                   icon: Zap,
                   title: "Hands-On Learning",
-                  description: "From trading workshops to coding bootcamps – learn by doing, not just listening"
+                  description: "From ethical trading workshops to coding bootcamps – learn by doing, not just listening"
                 }
               ].map((item, index) => (
                 <div key={index} className="text-center group">
@@ -342,19 +528,30 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
       {/* CTA Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-600/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-blue-600/10" />
         <div className="absolute inset-0 matrix-bg opacity-20" />
         
+        {/* Floating crypto symbols */}
+        <div className="absolute top-10 left-20 text-6xl opacity-10 float-animation">₿</div>
+        <div className="absolute bottom-10 right-20 text-6xl opacity-10 float-animation-delayed">Ξ</div>
+        <div className="absolute top-1/2 left-10 text-4xl opacity-10 float-animation">$</div>
+        <div className="absolute top-1/3 right-10 text-4xl opacity-10 float-animation-delayed">€</div>
+        
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center glass-panel rounded-2xl p-12">
+          <div className="max-w-4xl mx-auto text-center glass-panel rounded-2xl p-12 glow-cyan">
+            <div className="inline-block mb-4">
+              <div className="px-6 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30">
+                <span className="text-cyan-400 text-sm font-semibold tracking-wider">✨ JOIN THE REVOLUTION</span>
+              </div>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Ready to Level Up Your <span className="text-gradient">FinTech Game?</span>
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
               The clock&apos;s ticking — Join FAAST and be part of something extraordinary
             </p>
             <Link href="/joinus">
-              <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white border-0 text-lg px-8 py-6 glow-cyan">
+              <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white border-0 text-lg px-10 py-7 glow-cyan transform hover:scale-105 transition-all duration-300 shadow-2xl">
                 Join Now
                 <ArrowRight className="ml-2" />
               </Button>
@@ -483,11 +680,11 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
               
               <div className="glass-panel rounded-xl p-6 border border-cyan-500/30 mt-8">
                 <p className="text-cyan-400 font-semibold text-xl mb-2">
-                  We`&apos;`re not just learning about the future of finance—we`&apos;`re building it.
+                  We&apos;re not just learning about the future of finance—we&apos;re building it.
                 </p>
                 <p className="text-gray-400 text-base font-mono mt-4">
                   F.A.A.S.T. was founded in 2025 with the vision to integrate Finance, Algorithmic Thinking, 
-                  Analytics, Stocks, and Trading into one student-driven initiative at AMU.
+                  Analytics, Stocks, and ethical Trading into one student-driven initiative at AMU.
                 </p>
               </div>
             </div>
@@ -505,7 +702,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                "Participate in live trading sessions with real market data",
+                "Participate in live ethical trading sessions with real market data",
                 "Develop algorithmic trading bots and backtesting systems",
                 "Analyze financial datasets and create predictive models",
                 "Attend workshops on blockchain, crypto, and DeFi",
