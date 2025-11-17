@@ -371,6 +371,7 @@ const Members = () => {
 
         {/* Core Team / Club Coordinators */}
         <section className="mb-16">
+
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-cyan-400/80 mb-2">
@@ -385,8 +386,10 @@ const Members = () => {
               events to research and trading initiatives.
             </p>
           </div>
+          
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            
             {coreMembers.map((member) => (
               <article
                 key={member.name}
@@ -416,6 +419,12 @@ const Members = () => {
             ))}
           </div>
         </section>
+        <div className="mt-16 mb-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="premium-card glass-panel rounded-xl p-6 glow-cyan">
+                <div className="text-4xl font-bold text-gradient mb-2">50+</div>
+                <div className="text-gray-300 font-medium">Active Members</div>
+              </div>
+            </div>
 
         <section className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {nonCoreMembers.map((member) => (

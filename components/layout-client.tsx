@@ -322,7 +322,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
               <h3 className="text-cyan-400 font-semibold mb-4">Connect</h3>
               <div className="flex flex-col gap-2">
                 <a
-                  href="https://www.instagram.com/faast.amu"
+                  href="https://www.instagram.com/amu_faast_official/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-cyan-400 transition-colors text-sm"

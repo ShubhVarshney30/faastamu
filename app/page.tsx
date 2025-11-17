@@ -13,63 +13,19 @@ import { Label } from "@/components/ui/label";
 
 // Premium Finance-Themed Animated Background with 3D Crypto Elements
 const AnimatedBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Bitcoin/Crypto coin objects with 3D properties
-    interface CryptoCoin {
-      x: number;
-      y: number;
-      z: number;
-      size: number;
-      rotation: number;
-      rotationSpeed: number;
-      vx: number;
-      vy: number;
-      vz: number;
-      color: string;
-    }
-
-    const coins: CryptoCoin[] = [];
-    const coinCount = 15;
-
-    // Create floating crypto coins
-    for (let i = 0; i < coinCount; i++) {
-      coins.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        z: Math.random() * 100,
-        size: 30 + Math.random() * 40,
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.02,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        vz: (Math.random() - 0.5) * 0.2,
-        color: i % 3 === 0 ? '#FFD700' : i % 3 === 1 ? '#00E5FF' : '#8B5CF6'
-      });
-    }
-
-    // Financial chart particles
-    interface Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
-    }
-
-    const particles: Particle[] = [];
-    const particleCount = 80;
+    const particles: { x: number; y: number; vx: number; vy: number }[] = [];
+    const particleCount = 100;
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
@@ -77,131 +33,37 @@ const AnimatedBackground = () => {
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 3 + 1,
-        opacity: Math.random() * 0.5 + 0.3
       });
     }
 
-    // Chart lines for financial data visualization
-    interface ChartLine {
-      points: { x: number; y: number }[];
-      color: string;
-      offset: number;
-    }
-
-    const chartLines: ChartLine[] = [];
-    for (let i = 0; i < 3; i++) {
-      const points = [];
-      for (let j = 0; j < 50; j++) {
-        points.push({
-          x: (canvas.width / 50) * j,
-          y: canvas.height / 2 + Math.sin(j * 0.2 + i) * 50
-        });
-      }
-      chartLines.push({
-        points,
-        color: i === 0 ? 'rgba(0, 229, 255, 0.3)' : i === 1 ? 'rgba(139, 92, 246, 0.3)' : 'rgba(255, 215, 0, 0.3)',
-        offset: i * 20
-      });
-    }
-
-    let time = 0;
-
-    function drawCoin(coin: CryptoCoin) {
-      if (!ctx) return;
-      
-      const scale = 1 + (coin.z / 100) * 0.5;
-      const displaySize = coin.size * scale;
-      
-      ctx.save();
-      ctx.translate(coin.x, coin.y);
-      ctx.rotate(coin.rotation);
-      
-      // 3D effect with gradient
-      const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, displaySize);
-      gradient.addColorStop(0, coin.color);
-      gradient.addColorStop(0.7, coin.color + '80');
-      gradient.addColorStop(1, coin.color + '20');
-      
-      // Outer ring (coin edge)
-      ctx.beginPath();
-      ctx.arc(0, 0, displaySize, 0, Math.PI * 2);
-      ctx.fillStyle = gradient;
-      ctx.fill();
-      
-      // Inner symbol (Bitcoin B or Ethereum symbol)
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = 3;
-      ctx.font = `bold ${displaySize * 0.8}px Arial`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = '#000000';
-      ctx.fillText(coin.color === '#FFD700' ? '₿' : coin.color === '#00E5FF' ? 'Ξ' : '◈', 0, 0);
-      
-      ctx.restore();
-    }
+    let animationFrameId: number;
 
     function animate() {
-      if (!ctx || !canvas) return;
-      
-      time += 0.01;
-      
-      // Premium gradient background
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, '#030712');
-      gradient.addColorStop(0.5, '#0a1628');
-      gradient.addColorStop(1, '#1e1b4b');
-      ctx.fillStyle = gradient;
+      if (!canvas) return;
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Add radial glow effect
-      const glowGradient = ctx.createRadialGradient(
-        canvas.width / 2, canvas.height / 2, 0,
-        canvas.width / 2, canvas.height / 2, canvas.width / 2
-      );
-      glowGradient.addColorStop(0, 'rgba(0, 229, 255, 0.05)');
-      glowGradient.addColorStop(0.5, 'rgba(139, 92, 246, 0.03)');
-      glowGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = glowGradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw animated chart lines
-      chartLines.forEach((line, index) => {
-        ctx.beginPath();
-        ctx.strokeStyle = line.color;
-        ctx.lineWidth = 2;
-        line.points.forEach((point, i) => {
-          const x = point.x;
-          const y = point.y + Math.sin(time + i * 0.1 + index) * 30;
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        });
-        ctx.stroke();
-      });
-      
-      // Draw and update particles with connections
+
+      ctx.strokeStyle = 'rgba(0, 229, 255, 0.2)';
+      ctx.lineWidth = 1;
+
       particles.forEach((particle, i) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
-        
+
         if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
         if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
-        
-        // Draw particle
-        ctx.fillStyle = `rgba(0, 229, 255, ${particle.opacity})`;
+
+        ctx.fillStyle = 'rgba(0, 229, 255, 0.5)';
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
         ctx.fill();
-        
-        // Connect nearby particles
+
         particles.slice(i + 1).forEach(otherParticle => {
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < 120) {
-            ctx.strokeStyle = `rgba(0, 229, 255, ${0.2 * (1 - distance / 120)})`;
-            ctx.lineWidth = 1;
+
+          if (distance < 100) {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
@@ -209,61 +71,30 @@ const AnimatedBackground = () => {
           }
         });
       });
-      
-      // Draw and update 3D crypto coins
-      coins.forEach(coin => {
-        coin.x += coin.vx;
-        coin.y += coin.vy;
-        coin.z += coin.vz;
-        coin.rotation += coin.rotationSpeed;
-        
-        if (coin.x < -50 || coin.x > canvas.width + 50) coin.vx *= -1;
-        if (coin.y < -50 || coin.y > canvas.height + 50) coin.vy *= -1;
-        if (coin.z < 0 || coin.z > 100) coin.vz *= -1;
-        
-        drawCoin(coin);
-      });
-      
-      // Add floating geometric shapes (blockchain representation)
-      for (let i = 0; i < 5; i++) {
-        const x = (canvas.width / 6) * (i + 1);
-        const y = canvas.height / 2 + Math.sin(time + i) * 100;
-        const size = 40;
-        
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(time + i);
-        ctx.strokeStyle = 'rgba(139, 92, 246, 0.2)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        for (let j = 0; j < 6; j++) {
-          const angle = (Math.PI / 3) * j;
-          const px = Math.cos(angle) * size;
-          const py = Math.sin(angle) * size;
-          if (j === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        }
-        ctx.closePath();
-        ctx.stroke();
-        ctx.restore();
-      }
-      
-      requestAnimationFrame(animate);
+
+      animationFrameId = window.requestAnimationFrame(animate);
     }
 
     animate();
 
     const handleResize = () => {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, []);
 
   return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />;
 };
+
 
 export default function Home() {
    const acronym = [
@@ -402,7 +233,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
               </Link>
             </div>
 
-            <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+            {/* <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
               <div className="premium-card glass-panel rounded-xl p-6 glow-cyan">
                 <div className="text-4xl font-bold text-gradient mb-2">50+</div>
                 <div className="text-gray-300 font-medium">Active Members</div>
@@ -419,7 +250,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 <div className="text-4xl font-bold text-gradient mb-2">5</div>
                 <div className="text-gray-300 font-medium">Specialized Teams</div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

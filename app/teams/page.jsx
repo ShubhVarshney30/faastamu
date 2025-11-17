@@ -73,7 +73,7 @@ export default function Teams() {
     },
     {
       id: 5,
-      name: "Case Study Team",
+      name: "Case Study & Business Strategy Team",
       icon: LineChart,
       color: "from-cyan-500 to-blue-600",
       glowColor: "shadow-cyan-500/50",
