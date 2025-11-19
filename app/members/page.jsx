@@ -54,6 +54,39 @@ const coreMembers = [
   },
 ];
 
+const CORE_POSITION_PRIORITY = ["President", "Vice-President", "Secretary"];
+
+const groupCoreMembersByPriority = (members) => {
+  const prioritizedGroups = CORE_POSITION_PRIORITY
+    .map((position) => ({
+      position,
+      members: members.filter((member) => member.position === position),
+    }))
+    .filter((group) => group.members.length > 0);
+
+  const remainingMembers = members.filter(
+    (member) => !CORE_POSITION_PRIORITY.includes(member.position)
+  );
+
+  if (remainingMembers.length) {
+    prioritizedGroups.push({ position: "Members", members: remainingMembers });
+  }
+
+  return prioritizedGroups;
+};
+
+const getCoreGridColumns = (position) => {
+  switch (position) {
+    case "President":
+      return "grid-cols-1 max-w-lg mx-auto";
+    case "Vice-President":
+    case "Secretary":
+      return "grid-cols-1 sm:grid-cols-2 max-w-4xl mx-auto";
+    default:
+      return "md:grid-cols-2 xl:grid-cols-3";
+  }
+};
+
 const members = [
   {
     name: "Shubh Varshney",
@@ -349,6 +382,7 @@ const getInitials = (name) =>
     .toUpperCase();
 
 const Members = () => {
+  const prioritizedCoreMembers = groupCoreMembersByPriority(coreMembers);
   const coreMemberNames = new Set(coreMembers.map((member) => member.name));
   const nonCoreMembers = members.filter((member) => !coreMemberNames.has(member.name));
 
@@ -388,34 +422,37 @@ const Members = () => {
           </div>
           
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            
-            {coreMembers.map((member) => (
-              <article
-                key={member.name}
-                className="glass-panel border border-cyan-500/40 bg-[#0a1f3c]/80 rounded-3xl p-8 shadow-[0_0_28px_rgba(0,229,255,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_45px_rgba(0,229,255,0.5)] relative"
-              >
-                {/* <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-semibold bg-cyan-500/10 border border-cyan-500/40 text-cyan-200 uppercase tracking-wide">
-                  Core Team
-                </div> */}
+          <div className="space-y-10">
+            {prioritizedCoreMembers.map(({ position, members }) => (
+              <div key={position} className={`grid gap-6 ${getCoreGridColumns(position)}`}>
+                {members.map((member) => (
+                  <article
+                    key={member.name}
+                    className="glass-panel border border-cyan-500/40 bg-[#0a1f3c]/80 rounded-3xl p-8 shadow-[0_0_28px_rgba(0,229,255,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_45px_rgba(0,229,255,0.5)] relative"
+                  >
+                    {/* <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-semibold bg-cyan-500/10 border border-cyan-500/40 text-cyan-200 uppercase tracking-wide">
+                      Core Team
+                    </div> */}
 
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="h-14 w-14 rounded-2xl bg-linear-to-br from-cyan-500 via-blue-600 to-purple-600 flex items-center justify-center text-lg font-bold">
-                    {getInitials(member.name)}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white">{member.name}</h3>
-                    <p className="text-sm text-cyan-300/90">{member.position}</p>
-                  </div>
-                </div>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="h-14 w-14 rounded-2xl bg-linear-to-br from-cyan-500 via-blue-600 to-purple-600 flex items-center justify-center text-lg font-bold">
+                        {getInitials(member.name)}
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-white">{member.name}</h3>
+                        <p className="text-sm text-cyan-300/90">{member.position}</p>
+                      </div>
+                    </div>
 
-                <dl className="space-y-2 text-sm text-gray-300">
-                  <div className="flex justify-between gap-4">
-                    <dt className="text-gray-400">Faculty No.</dt>
-                    <dd className="text-white font-medium">{member.facultyNumber}</dd>
-                  </div>
-                </dl>
-              </article>
+                    <dl className="space-y-2 text-sm text-gray-300">
+                      <div className="flex justify-between gap-4">
+                        <dt className="text-gray-400">Faculty No.</dt>
+                        <dd className="text-white font-medium">{member.facultyNumber}</dd>
+                      </div>
+                    </dl>
+                  </article>
+                ))}
+              </div>
             ))}
           </div>
         </section>
