@@ -200,7 +200,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
             {/* Club Motto */}
             <div className="mb-6">
-              <div className="inline-block px-6 py-3 rounded-lg glass-panel border border-yellow-500/30 bg-gradient-to-r from-yellow-500/10 to-green-500/10">
+              <div className="inline-block px-6 py-3 rounded-lg glass-panel border border-yellow-500/30 bg-linear-to-r from-yellow-500/10 to-green-500/10">
                 <p className="text-lg md:text-xl font-bold">
                   <span className="text-red-400">Bear</span>{' '}
                   <span className="text-cyan-400">Bytes</span>{' '}
@@ -222,7 +222,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             
             <div className="flex flex-col sm:flex-row  mb-4 gap-4 justify-center">
               <Link href="/joinus">
-                <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white border-0 text-lg px-8 py-6 glow-cyan">
+                <Button className="bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white border-0 text-lg px-8 py-6 glow-cyan">
                   Join FAAST Now
                   <ArrowRight className="ml-2" />
                 </Button>
@@ -307,7 +307,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 }
               ].map((item, index) => (
                 <div key={index} className="premium-card glass-panel rounded-xl p-6 group">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
+                  <div className={`w-14 h-14 rounded-xl bg-linear-to-r ${item.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
                     <item.icon className="text-white" size={26} />
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-cyan-400 group-hover:text-cyan-300 transition-colors">{item.title}</h3>
@@ -346,7 +346,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 }
               ].map((item, index) => (
                 <div key={index} className="text-center group">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center group-hover:scale-110 group-hover:glow-cyan transition-all duration-300">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center group-hover:scale-110 group-hover:glow-cyan transition-all duration-300">
                     <item.icon className="text-white" size={32} />
                   </div>
                   <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
@@ -360,7 +360,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
       {/* CTA Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-blue-600/10" />
+        <div className="absolute inset-0 bg-linear-to-r from-cyan-500/10 via-purple-500/10 to-blue-600/10" />
         <div className="absolute inset-0 matrix-bg opacity-20" />
         
         {/* Floating crypto symbols */}
@@ -372,7 +372,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center glass-panel rounded-2xl p-12 glow-cyan">
             <div className="inline-block mb-4">
-              <div className="px-6 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30">
+              <div className="px-6 py-2 rounded-full bg-linear-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30">
                 <span className="text-cyan-400 text-sm font-semibold tracking-wider">✨ JOIN THE REVOLUTION</span>
               </div>
             </div>
@@ -383,7 +383,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
               The clock&apos;s ticking — Join FAAST and be part of something extraordinary
             </p>
             <Link href="/joinus">
-              <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white border-0 text-lg px-10 py-7 glow-cyan transform hover:scale-105 transition-all duration-300 shadow-2xl">
+              <Button className="bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white border-0 text-lg px-10 py-7 glow-cyan transform hover:scale-105 transition-all duration-300 shadow-2xl">
                 Join Now
                 <ArrowRight className="ml-2" />
               </Button>
@@ -418,7 +418,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8">
               <div className="glass-panel rounded-xl p-8 hover:glow-cyan transition-all">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center mb-6">
                   <TrendingUp className="text-white" size={32} />
                 </div>
                 <h2 className="text-3xl font-bold mb-4 text-cyan-400">Our Mission</h2>
@@ -431,7 +431,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
               </div>
 
               <div className="glass-panel rounded-xl p-8 hover:glow-cyan transition-all">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-linear-to-r from-purple-500 to-pink-600 flex items-center justify-center mb-6">
                   <Zap className="text-white" size={32} />
                 </div>
                 <h2 className="text-3xl font-bold mb-4 text-purple-400">Our Vision</h2>
@@ -465,7 +465,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 >
                   <div className="flex items-start gap-6">
                     <div className="flex-shrink-0">
-                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
+                      <div className="w-16 h-16 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
                         {item.letter}
                       </div>
                     </div>
@@ -548,7 +548,7 @@ FAAST is now an interdisciplinary club, bringing together students from engineer
                   className="glass-panel rounded-xl p-6 hover:scale-105 hover:glow-cyan transition-all group"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 mt-1 group-hover:scale-110 transition-transform">
+                    <div className="w-8 h-8 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 mt-1 group-hover:scale-110 transition-transform">
                       <span className="text-white font-bold text-sm">{index + 1}</span>
                     </div>
                     <p className="text-gray-300">{activity}</p>
@@ -602,7 +602,7 @@ FAAST is now an interdisciplinary club, bringing together students from engineer
                         rel="noopener noreferrer"
                         className="flex items-center gap-4 p-4 rounded-xl glass-panel hover:scale-105 hover:glow-cyan transition-all group"
                       >
-                        <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${social.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+                        <div className={`w-14 h-14 rounded-full bg-linear-to-r ${social.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
                           <social.icon className="text-white" size={28} />
                         </div>
                         <div className="flex-1 text-left">
@@ -625,7 +625,7 @@ FAAST is now an interdisciplinary club, bringing together students from engineer
                 <div className="grid md:grid-cols-3 gap-6 mb-12">
                   {contactInfo.map((info, index) => (
                     <div key={index} className="glass-panel rounded-xl p-6 hover:scale-105 hover:glow-cyan transition-all text-center">
-                      <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                      <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center">
                         <info.icon className="text-white" size={24} />
                       </div>
                       <h3 className="text-lg font-bold text-cyan-400 mb-2">{info.title}</h3>
@@ -712,7 +712,7 @@ FAAST is now an interdisciplinary club, bringing together students from engineer
     
                       <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white py-6 text-lg glow-cyan"
+                        className="w-full bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white py-6 text-lg glow-cyan"
                       >
                         <Send className="mr-2" size={20} />
                         Send Message
@@ -766,7 +766,7 @@ FAAST is now an interdisciplinary club, bringing together students from engineer
                          target="_blank"
                          rel="noopener noreferrer"
                        >
-                         <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white">
+                         <Button className="bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white">
                            <MapPin className="mr-2" size={20} />
                            Open in Google Maps
                          </Button>

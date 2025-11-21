@@ -57,7 +57,7 @@ export default function JoinUs() {
               </div>
 
               <div className="relative z-10">
-                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-red-500/20 to-orange-600/20 border-2 border-red-500/30 flex items-center justify-center">
+                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-linear-to-br from-red-500/20 to-orange-600/20 border-2 border-red-500/30 flex items-center justify-center">
                   <Lock className="text-red-400" size={48} />
                 </div>
 
@@ -89,7 +89,7 @@ export default function JoinUs() {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-3 px-6 py-3 rounded-xl glass-panel hover:scale-105 hover:glow-cyan transition-all group"
                     >
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <div className="w-10 h-10 rounded-full bg-linear-to-br from-pink-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Instagram className="text-white" size={20} />
                       </div>
                       <div className="text-left">
@@ -104,7 +104,7 @@ export default function JoinUs() {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-3 px-6 py-3 rounded-xl glass-panel hover:scale-105 hover:glow-cyan transition-all group"
                     >
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <div className="w-10 h-10 rounded-full bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Linkedin className="text-white" size={20} />
                       </div>
                       <div className="text-left">
@@ -139,7 +139,7 @@ export default function JoinUs() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {benefits.map((benefit, index) => (
                 <div key={index} className="glass-panel rounded-xl p-6 hover:scale-105 hover:glow-cyan transition-all text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-linear-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
                     <benefit.icon className="text-white" size={32} />
                   </div>
                   <h3 className="text-xl font-bold mb-2 text-cyan-400">{benefit.title}</h3>

@@ -4,7 +4,7 @@ import { Code, Sparkles, Terminal, BarChart2, BookOpen, Zap, TrendingUp, Cpu, Da
 const TeamSection = ({ title, icon: Icon, children }) => (
   <section className="mb-16">
     <div className="flex items-center gap-3 mb-8">
-      <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border border-cyan-500/20">
+      <div className="p-2 rounded-lg bg-linear-to-br from-cyan-500/10 to-blue-600/10 border border-cyan-500/20">
         <Icon className="w-6 h-6 text-cyan-400" />
       </div>
       <h2 className="text-2xl font-bold text-gray-100">{title}</h2>
@@ -20,7 +20,7 @@ const ProjectCard = ({ title, description, icon: Icon, iconColor = "text-cyan-40
     <div className="absolute -top-4 -right-4 w-24 h-24 bg-cyan-500/5 rounded-full blur-3xl" />
     
     <div className="flex items-start gap-4 mb-4">
-      <div className={`p-3 rounded-lg bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border ${iconColor.replace('text-', 'border-')}/20`}>
+      <div className={`p-3 rounded-lg bg-linear-to-br from-cyan-500/10 to-blue-600/10 border ${iconColor.replace('text-', 'border-')}/20`}>
         <Icon className={`w-6 h-6 ${iconColor}`} />
       </div>
       <h3 className="text-xl font-bold text-white">{title}</h3>
@@ -158,7 +158,7 @@ export default function Projects() {
       {/* CTA Section */}
       <div className="mt-16 max-w-4xl mx-auto px-4">
         <div className="glass-panel rounded-2xl p-8 text-center relative overflow-hidden border border-yellow-500/20">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-amber-500/5" />
+          <div className="absolute inset-0 bg-linear-to-br from-yellow-500/5 to-amber-500/5" />
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-4">
               <Sparkles className="text-yellow-400" size={18} />
