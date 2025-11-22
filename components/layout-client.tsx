@@ -295,7 +295,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
             <div className="space-y-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6907023ec48ddc1c6ff697dd/8548ab785_IMG_8201.jpg"
+                src="/logo_faast.jpg"
                 alt="FAAST Logo"
                 className="footer-logo"
               />
